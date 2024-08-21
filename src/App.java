@@ -3,7 +3,7 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-public class App extends JFrame {
+public class App extends JFrame {//Лишнее?
     public int result = 0;
     public App() {
         setTitle("Calculator");
