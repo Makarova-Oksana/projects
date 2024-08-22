@@ -12,11 +12,11 @@ import java.util.Vector;
 public class Main {
     public static void main(String[] args) {
         File f = new File("text.txt");
-        boolean b;
+        boolean b; //Эта переменная используется только внутри блока try. Ее объявление лучше подвинуть внутрь блока.
         try {
 
             b = f.createNewFile();
-            if (b) {
+            if (b) { //Имена надо давать понятные, например, isFileCreated
                 System.out.println("File Created!");
             } else {
                 System.out.println("File already exists!");
@@ -25,17 +25,17 @@ public class Main {
             System.out.println("Error!");
             e.printStackTrace();
         }
-        String line;
+        String line; //Объявление можно сделать ближе к использованию.
 
 
-        Vector<strInf> stroki = new Vector<>();
+        Vector<strInf> stroki = new Vector<>();// Лучше использовать ArrayList, т.к. методы вектора - synchronized (для многопоточности, медленные)
         try {
-            FileReader readf = new FileReader("text.txt");
+            FileReader readf = new FileReader("text.txt"); //Строковый литерал можно вынести в переменную
             BufferedReader buffread = new BufferedReader(readf);
             line = buffread.readLine();
             while (line != null) {
                 strInf stroka = new strInf();
-                stroka.Str = line;
+                stroka.Str = line;//Строку можно пережавать в конструктор класса где в том числе может вычисляться длина
                 stroka.strLen = line.length();
                 stroki.add(stroka);
                 line = buffread.readLine();
@@ -48,7 +48,7 @@ public class Main {
         boolean cont = true;
         while (cont) {
             strInf stroka = new strInf();
-            cont = false;
+            cont = false; // Лучше использовать break
             for (int i = 0; i < stroki.size() - 1; i++) {
                 if (stroki.get(i + 1).strLen < stroki.get(i).strLen) {
                     stroka = stroki.get(i);
@@ -67,7 +67,7 @@ public class Main {
                 writer.write("\r\n");
             }
             writer.flush();
-            writer.close();
+            writer.close(); //Попробуй try-with-resources + reader тоже надо закрывать.
         }
         catch(IOException e) {
             System.out.println("Error while writing");
